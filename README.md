@@ -17,7 +17,7 @@ We have an interest in math that makes coding these functions enjoyable and usef
 
 
 
-**Features:**
+**Features**
 
 The calculator will take a mathematical expression entered in the terminal, and give the user the solution back in the terminal.
 
