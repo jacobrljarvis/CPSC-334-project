@@ -1,0 +1,21 @@
+First task, planning stage
+Make sure everyone is on the same page about what environment to use
+Decide roughly on what features will be implemented and choose who does what
+Decide on what the workflow and timeline will look like
+
+
+
+Second task, initial set-up:
+Set up environment and everything needed to be ready to code with all the automation features
+
+
+Testing set-up:
+Write all the tests
+
+
+Coding/workflow stage:
+Implement the code, modify tests/ requirements as needed
+
+
+Presentation:
+At the end, finalize the code and set up the presentation
