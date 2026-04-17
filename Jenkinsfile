@@ -2,21 +2,15 @@ pipeline {
     agent any
 
     stages {
-        stage('Get Code') {
-            steps {
-                checkout scm
-            }
-        }
-
         stage('Install Pytest') {
             steps {
-                sh '''python3 -m pip install pytest'''
+                bat 'py -m pip install pytest'
             }
         }
 
         stage('Run Tests') {
             steps {
-                sh '''python3 -m pytest test_calculator.py'''
+                bat 'py -m pytest test_calculator.py'
             }
         }
     }
