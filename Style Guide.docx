@@ -1,0 +1,30 @@
+Style Guide for CPSC 334 Final Project
+
+Naming Conventions
+Use meaningful names
+Classes: PascalCase
+Functions/Methods: snake_case
+Variables: snake_case
+
+Indentation
+Done with a single tab
+
+Structure
+Define classes at the top, and `main()` at the bottom
+
+Comments
+Use comments sparingly, only when code is not self-explanatory, put a comment before each function and each test, can be as simple as needed to describe its function
+
+Error Handling
+Use try-except blocks in main code to handle user input errors, and arise a `ValueError` for invalid inputs
+
+Testing
+Done with pytest
+Use descriptive test function names that explain what is being tested
+
+Organization
+Keep functions short and focused on a single task
+Avoid complex logic in the main function; delegate to functions
+
+Imports
+Import modules at the top of the file
