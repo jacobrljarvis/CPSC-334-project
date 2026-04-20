@@ -4,13 +4,13 @@ pipeline {
     stages {
         stage('Install Pytest') {
             steps {
-                bat 'python -m pip install pytest'
+                bat 'py -m pip install pytest'
             }
         }
 
         stage('Run Tests') {
             steps {
-                bat 'python -m pytest test_calculator.py'
+                bat 'py -m pytest test_calculator.py'
             }
         }
     }
