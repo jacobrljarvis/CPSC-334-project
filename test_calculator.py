@@ -120,3 +120,29 @@ def test_logarithm_invalid_base(calc):
     with pytest.raises(ValueError, match="Logarithm base must be greater than 1."):
         calc.logarithm(100, 1)
 
+
+# --- Trigonometric Functions ---
+def test_sin_basic(calc):
+    import math
+    assert calc.sin(math.pi / 2) == 1
+
+def test_sin_zero(calc):
+    import math
+    assert calc.sin(0) == 0
+
+def test_cos_basic(calc):
+    import math
+    assert calc.cos(0) == 1
+
+def test_cos_pi(calc):
+    import math
+    assert calc.cos(math.pi) == -1
+
+def test_tan_basic(calc):
+    import math
+    assert calc.tan(math.pi / 4) == 1
+
+def test_tan_zero(calc):
+    import math
+    assert calc.tan(0) == 0
+

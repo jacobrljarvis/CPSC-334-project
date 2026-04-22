@@ -39,10 +39,22 @@ class Calculator:
         import math
         return math.log(a, base)
 
+    def sin(self, a):
+        import math
+        return math.sin(a)
+    
+    def cos(self, a):
+        import math
+        return math.cos(a)
+    
+    def tan(self, a):
+        import math
+        return math.tan(a)
+
 def main():
     calculator = Calculator()
-    print("Welcome to the Calculator!")
-    print("Supported operations: +, -, *, /, ^ (power), sqrt (square root), log (logarithm)")
+    print("Welcome to the Calculator! Operations are currently running in radians.")
+    print("Supported operations: +, -, *, /, ^ (power), sqrt (square root), log (logarithm), sin, cos, tan")
     print()
     
     while True:
@@ -111,9 +123,24 @@ def main():
                 result = calculator.logarithm(num, base)
                 print(f"Calculating logarithm as log base {base} of {num}...")
                 print(f"Result: {result}\n")
+
+            elif 'sin' in equation:
+                num = float(equation.replace('sin', '').strip())
+                result = calculator.sin(num)
+                print(f"Result: {result}\n")
+
+            elif 'cos' in equation:
+                num = float(equation.replace('cos', '').strip())
+                result = calculator.cos(num)
+                print(f"Result: {result}\n")
+
+            elif 'tan' in equation:
+                num = float(equation.replace('tan', '').strip())
+                result = calculator.tan(num)
+                print(f"Result: {result}\n")
             
             else:
-                print("Invalid equation format. Please use basic operations: +, -, *, /, ^, sqrt, log\n")
+                print("Invalid equation format. Please use basic operations: +, -, *, /, ^, sqrt, log, sin, cos, tan\n")
         
         except ValueError as error:
             print(f"Error: {error}\n")
