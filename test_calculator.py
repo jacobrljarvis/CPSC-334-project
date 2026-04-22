@@ -140,7 +140,7 @@ def test_cos_pi(calc):
 
 def test_tan_basic(calc):
     import math
-    assert calc.tan(math.pi / 4) == 1
+    assert calc.tan(math.pi / 4) == pytest.approx(1)
 
 def test_tan_zero(calc):
     import math
