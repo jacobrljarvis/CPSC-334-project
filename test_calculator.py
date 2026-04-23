@@ -139,6 +139,37 @@ def test_evaluate_mismatched_parens(calc):
     with pytest.raises(ValueError):
         calc.evaluate("(2 + 3")
 
+def test_evaluate_pi(calc):
+    import math
+    assert calc.evaluate("pi") == pytest.approx(math.pi)
+
+def test_evaluate_pi_in_expression(calc):
+    import math
+    assert calc.evaluate("2 * pi") == pytest.approx(2 * math.pi)
+
+def test_evaluate_e(calc):
+    import math
+    assert calc.evaluate("e") == pytest.approx(math.e)
+
+def test_evaluate_e_in_expression(calc):
+    import math
+    assert calc.evaluate("e ^ 2") == pytest.approx(math.e ** 2)
+
+def test_evaluate_unary_negative(calc):
+    assert calc.evaluate("-5 + 3") == -2
+
+def test_evaluate_unary_negative_in_parens(calc):
+    assert calc.evaluate("(-3) * 4") == -12
+
+def test_evaluate_negative_exponent(calc):
+    assert calc.evaluate("(-2) ^ 3") == -8
+
+def test_evaluate_decimal(calc):
+    assert calc.evaluate("1.5 + 2.5") == 4.0
+
+def test_evaluate_decimal_multiply(calc):
+    assert calc.evaluate("0.1 * 10") == pytest.approx(1.0)
+
 
 # --- Trigonometric Functions ---
 def test_sin_basic(calc):
