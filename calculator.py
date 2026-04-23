@@ -47,10 +47,17 @@ class Calculator:
         return result
 
     def _tokenize(self, expression):
+        import math
         tokens = []
         i = 0
         while i < len(expression):
-            if expression[i].isdigit() or expression[i] == '.':
+            if expression[i:i+2] == 'pi':
+                tokens.append(('NUM', math.pi))
+                i += 2
+            elif expression[i] == 'e' and (i + 1 >= len(expression) or not expression[i + 1].isalpha()):
+                tokens.append(('NUM', math.e))
+                i += 1
+            elif expression[i].isdigit() or expression[i] == '.':
                 j = i
                 while j < len(expression) and (expression[j].isdigit() or expression[j] == '.'):
                     j += 1
