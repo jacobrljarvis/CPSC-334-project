@@ -121,6 +121,25 @@ def test_logarithm_invalid_base(calc):
         calc.logarithm(100, 1)
 
 
+# --- Parentheses / evaluate ---
+
+def test_evaluate_parens_override_precedence(calc):
+    assert calc.evaluate("(2 + 3) * 4") == 20
+
+def test_evaluate_nested_parentheses(calc):
+    assert calc.evaluate("(2 + (3 * 4))") == 14
+
+def test_evaluate_precedence_without_parens(calc):
+    assert calc.evaluate("2 + 3 * 4") == 14
+
+def test_evaluate_parens_with_division(calc):
+    assert calc.evaluate("10 / (2 + 3)") == 2
+
+def test_evaluate_mismatched_parens(calc):
+    with pytest.raises(ValueError):
+        calc.evaluate("(2 + 3")
+
+
 # --- Trigonometric Functions ---
 def test_sin_basic(calc):
     import math
