@@ -57,13 +57,20 @@ class Calculator:
             elif expression[i] == 'e' and (i + 1 >= len(expression) or not expression[i + 1].isalpha()):
                 tokens.append(('NUM', math.e))
                 i += 1
+            elif expression[i].isalpha():
+                j = i
+                while j < len(expression) and expression[j].isalpha():
+                    j += 1
+                name = expression[i:j]
+                tokens.append(('NAME', name))
+                i = j
             elif expression[i].isdigit() or expression[i] == '.':
                 j = i
                 while j < len(expression) and (expression[j].isdigit() or expression[j] == '.'):
                     j += 1
                 tokens.append(('NUM', float(expression[i:j])))
                 i = j
-            elif expression[i] in '+-*/^()':
+            elif expression[i] in '+-*/^(),':
                 tokens.append(('OP', expression[i]))
                 i += 1
             else:
@@ -109,6 +116,22 @@ class Calculator:
         tok_type, tok_val = tokens[pos]
         if tok_type == 'NUM':
             return tok_val, pos + 1
+        if tok_type == 'NAME':
+            if pos + 1 < len(tokens) and tokens[pos + 1] == ('OP', '('):
+                pos += 2
+                args = []
+                if pos < len(tokens) and tokens[pos] != ('OP', ')'):
+                    while True:
+                        arg, pos = self._parse_expr(tokens, pos)
+                        args.append(arg)
+                        if pos < len(tokens) and tokens[pos] == ('OP', ','):
+                            pos += 1
+                            continue
+                        break
+                if pos >= len(tokens) or tokens[pos] != ('OP', ')'):
+                    raise ValueError("Missing closing parenthesis")
+                return self._eval_function(tok_val, args), pos + 1
+            return self._eval_name(tok_val), pos + 1
         if tok_val == '(':
             pos += 1
             val, pos = self._parse_expr(tokens, pos)
@@ -116,6 +139,40 @@ class Calculator:
                 raise ValueError("Missing closing parenthesis")
             return val, pos + 1
         raise ValueError(f"Unexpected token: {tok_val}")
+
+    def _eval_name(self, name):
+        if name == 'pi':
+            return math.pi
+        if name == 'e':
+            return math.e
+        raise ValueError(f"Unsupported name '{name}' in expression.")
+
+    def _eval_function(self, func_name, args):
+        if func_name == 'sqrt':
+            if len(args) != 1:
+                raise ValueError("sqrt() takes one argument.")
+            return self.square_root(args[0])
+
+        if func_name == 'log':
+            if len(args) == 1:
+                if args[0] <= 0:
+                    raise ValueError("Logarithm is undefined for non-positive numbers.")
+                return math.log(args[0])
+            if len(args) == 2:
+                return self.logarithm(args[0], args[1])
+            raise ValueError("log() takes one or two arguments.")
+
+        if func_name == 'root':
+            if len(args) != 2:
+                raise ValueError("root() takes two arguments.")
+            return self.root(args[0], args[1])
+
+        if func_name in ('sin', 'cos', 'tan'):
+            if len(args) != 1:
+                raise ValueError(f"{func_name}() takes one argument.")
+            return getattr(math, func_name)(args[0])
+
+        raise ValueError(f"Unsupported function '{func_name}' in expression.")
 
     def sin(self, a):
         import math
@@ -132,9 +189,9 @@ class Calculator:
 def main():
     calculator = Calculator()
     print("Welcome to the Calculator! Operations are currently running in radians.")
-    print("Supported operations: +, -, *, /, ^ (power), sqrt (square root), log (logarithm), sin, cos, tan")
-    print()
-    
+    print("Supported operations: +, -, *, /, ^ (power), parentheses, sqrt(), log(), sin(), cos(), tan()")
+    print("Example: 2 * 4 + (3 - 1)")
+    print()    
     while True:
         equation = input("Enter a math equation to solve (or 'quit' to exit): ").strip()
         
@@ -143,45 +200,8 @@ def main():
             break
         
         try:
-            # to take square root (like "sqrt64")
-            if 'sqrt' in equation:
-                num = float(equation.replace('sqrt', '').strip())
-                result = calculator.square_root(num)
-                print(f"Result: {result}\n")
-
-            elif 'root' in equation:
-                parts = equation.split('root')
-                num = float(parts[0].strip())
-                degree = float(parts[1].strip())
-                result = calculator.root(num, degree)
-                print(f"Result: {result}\n")
-
-            elif 'log' in equation:
-                parts = equation.split('log')
-                num = float(parts[0].strip())
-                base = float(parts[1].strip())
-                result = calculator.logarithm(num, base)
-                print(f"Calculating logarithm as log base {base} of {num}...")
-                print(f"Result: {result}\n")
-
-            elif 'sin' in equation:
-                num = float(equation.replace('sin', '').strip())
-                result = calculator.sin(num)
-                print(f"Result: {result}\n")
-
-            elif 'cos' in equation:
-                num = float(equation.replace('cos', '').strip())
-                result = calculator.cos(num)
-                print(f"Result: {result}\n")
-
-            elif 'tan' in equation:
-                num = float(equation.replace('tan', '').strip())
-                result = calculator.tan(num)
-                print(f"Result: {result}\n")
-            
-            else:
-                result = calculator.evaluate(equation)
-                print(f"Result: {result}\n")
+            result = calculator.evaluate(equation)
+            print(f"Result: {result}\n")
         
         except ValueError as error:
             print(f"Error: {error}\n")
