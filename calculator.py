@@ -1,29 +1,37 @@
 class Calculator:
+    # performs addition on the two numbers that are passed in.
     def add(self, a, b):
         return a + b
 
+    # performs subtraction on the two numbers that are passed in.
     def subtract(self, a, b):
         return a - b
     
+    # performs multiplication on the two numbers that are passed in.
     def multiply(self, a, b):
         return a * b
-    
+
+    # performs division on the two numbers that are passed in.
     def divide(self, a, b):
         if b == 0:
             raise ValueError("Cannot divide by zero, answer is undefined.")
         return a / b
     
+    # performs squaring on the number that is passed in.
     def square(self, a):
         return a ** 2
 
+    # performs exponential functions on the first parameter raised to the power of the second parameter.
     def power(self, a, b):
         return a ** b
     
+    # performs square root on the number that is passed in.
     def square_root(self, a):
         if a < 0:
             raise ValueError("Cannot take the square root of a negative number.")
         return a ** 0.5
     
+    # performs nth root on the first parameter with the second parameter as n.
     def root(self, a, b):
         if a < 0 and b % 2 == 0:
             raise ValueError("Cannot take an even root of a negative number.")
@@ -31,6 +39,7 @@ class Calculator:
             return -((-a) ** (1 / b))
         return a ** (1 / b)
     
+    # performs logarithm of the first parameter with the second parameter as the base.
     def logarithm(self, a, base):
         if a <= 0:
             raise ValueError("Logarithm is undefined for non-positive numbers.")
@@ -39,6 +48,7 @@ class Calculator:
         import math
         return math.log(a, base)
 
+    # evaluates a mathematical expression passed in as a string and returns the result.
     def evaluate(self, expression):
         tokens = self._tokenize(expression.replace(' ', ''))
         result, pos = self._parse_expr(tokens, 0)
@@ -46,6 +56,12 @@ class Calculator:
             raise ValueError("Invalid expression")
         return result
 
+
+    '''
+    Below are helper methods for evaluating the equation enetered by the user, and working
+    to properly handle the equation if there are multiple steps involved. There are also 
+    methods for handling parts of the equations that are non-numeric. 
+    '''
     def _tokenize(self, expression):
         import math
         tokens = []
@@ -140,6 +156,7 @@ class Calculator:
             return val, pos + 1
         raise ValueError(f"Unexpected token: {tok_val}")
 
+    # for handling pi and e
     def _eval_name(self, name):
         if name == 'pi':
             return math.pi
@@ -147,6 +164,7 @@ class Calculator:
             return math.e
         raise ValueError(f"Unsupported name '{name}' in expression.")
 
+    # for handling sqrt, trig, and log errors
     def _eval_function(self, func_name, args):
         if func_name == 'sqrt':
             if len(args) != 1:
@@ -174,18 +192,25 @@ class Calculator:
 
         raise ValueError(f"Unsupported function '{func_name}' in expression.")
 
+    # performing sin operations in radians
     def sin(self, a):
         import math
         return math.sin(a)
     
+    # performing cos operations in radians
     def cos(self, a):
         import math
         return math.cos(a)
     
+    # performing tan operations in radians
     def tan(self, a):
         import math
         return math.tan(a)
-
+'''
+This is where the program starts, and it will read user input continuously until the user types 'quit'. 
+It will evaluate the equation entered by the user and print the result, or print an error message if the input is invalid.
+It tells the user what is possible, and it is where user sees their answer after entering an equation.
+'''
 def main():
     calculator = Calculator()
     print("Welcome to the Calculator! Operations are currently running in radians.")
