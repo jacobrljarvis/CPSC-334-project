@@ -57,15 +57,11 @@ pipeline {
                 // Publish test results
                 junit testResults: 'test-results.xml', allowEmptyResults: true
                 
-                // Publish coverage reports
-                publishHTML target: [
-                    reportDir: 'coverage',
-                    reportFiles: 'index.html',
-                    reportName: 'Code Coverage Report'
-                ]
+                // Archive coverage reports
+                archiveArtifacts artifacts: 'coverage/**', allowEmptyArchive: true
                 
                 echo "Test Results: test-results.xml"
-                echo "Coverage Report: coverage/index.html"
+                echo "Coverage Report: coverage/index.html (archived)"
             }
         }
 
