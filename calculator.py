@@ -13,6 +13,9 @@ class Calculator:
             raise ValueError("Cannot divide by zero, answer is undefined.")
         return a / b
 
+    def square(self, a):
+        return a ** 2
+
     def power(self, a, b):
         return a ** b
     
