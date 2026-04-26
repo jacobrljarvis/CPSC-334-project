@@ -1,3 +1,5 @@
+import math
+
 class Calculator:
     # performs addition on the two numbers that are passed in.
     def add(self, a, b):
