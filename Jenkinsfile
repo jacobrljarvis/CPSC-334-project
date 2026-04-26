@@ -32,7 +32,7 @@ pipeline {
             steps {
                 script {
                     echo "Installing required packages..."
-                    bat 'python -m pip install pytest pytest-cov'
+                    sh 'python -m pip install pytest pytest-cov'
                 }
             }
         }
@@ -41,7 +41,7 @@ pipeline {
             steps {
                 script {
                     echo "Running test suite with coverage analysis..."
-                    bat "python -m pytest ${PYTEST_ARGS} test_calculator.py"
+                    sh "python -m pytest ${PYTEST_ARGS} test_calculator.py"
                 }
             }
         }
