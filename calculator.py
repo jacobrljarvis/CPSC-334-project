@@ -12,7 +12,7 @@ class Calculator:
         if b == 0:
             raise ValueError("Cannot divide by zero, answer is undefined.")
         return a / b
-    
+
     def square(self, a):
         return a ** 2
 
